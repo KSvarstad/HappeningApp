@@ -4,7 +4,7 @@ function updateViewHappenings(){
     <div class="container">
         <div class="box1">
             <h3>Velg en trekning!</h3>
-             ${getHappenings()}
+             ${getHappeningsHtml()}
             <h3>Velg personer som skal være med i trekningen!</h3>
             <input type="checkbox"
             onclick="selectAllOrNone(this.checked)"
@@ -26,7 +26,7 @@ function updateViewHappenings(){
     `;
 }
 
-function getHappenings(){
+function getHappeningsHtml(){
     let html = '';
     const happenings = model.data.happenings;
     for (let i = 0; i < happenings.length; i++) {

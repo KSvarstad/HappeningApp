@@ -189,3 +189,13 @@ function getAllHappenings() {
     }
     return happenings;
 }
+
+function createUserPointsObj(){
+    let userPoints = model.data.userPoints
+    let happeningIds = getAllHappeningIds()
+    let userObject = {}
+    userObject.userId = getMaxUserId()
+    userObject.happeningId = getMaxHappeningId()
+    userObject.points = ''
+    userPoints.push(userObject)
+}

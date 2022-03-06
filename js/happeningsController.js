@@ -6,7 +6,6 @@ function selectAllOrNone(selectAll) {
     updateView();
 }
 
-
 function getChecked(isSelected) {
     return isSelected ? 'checked="checked"' : '';
 }
@@ -66,6 +65,15 @@ function getCheckedHappeningId() {
     }
 }
 
+function getAllHappeningIds(){
+    let happenings = []
+    let allHappenings = model.data.happenings
+    for (let i = 0; i < allHappenings.length; i++) {
+        happenings.push(allHappenings[i].id)
+    }
+    return happenings
+}
+
 function resetHappenings(){
     model.data.doneHappenings = []
     updateView()
@@ -78,16 +86,15 @@ function drawUser(){
     winner.participants = getCheckedUsersNamesFromLowestPoint()
     let listOfUsers = getUsersWithLowestPoint()
     let drawnPerson = listOfUsers[Math.floor(Math.random()*listOfUsers.length)];
-    console.log(drawnPerson)
     drawnPerson.points += 2;
     let winnerId = drawnPerson.userId
     let winnerUser = getUserById(winnerId)
-    console.log(winnerUser.name)
     winner.id = getCheckedHappeningId()
     winner.name = getCheckedHappeningName()
     winner.userDrawn = winnerUser.name
     winner.time = new Date
     winners.unshift(winner)
     updateViewHappenings()
-    return winners
+    return winner
 }
+

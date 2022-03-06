@@ -2,7 +2,7 @@ function updateViewUserEdit(){
     document.getElementById('app').innerHTML = /*html*/` 
     ${createMenuHtml()}
 
-    <p>Endre navn på bruker <strong>${model.inputs.editUser.name}</strong> 
+    <p>Endre navn på person <strong>${model.inputs.editUser.name}</strong> 
     <br/><br/>
     <input 
         type="text" 

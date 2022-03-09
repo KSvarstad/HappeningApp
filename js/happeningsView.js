@@ -71,8 +71,11 @@ function createTextList(liste) {
 
 function getDoneHappening() {
     let html = '';
-    const happenings = getDoneHappeningsCheckedHappening()
-    const doneHappenings = model.data.doneHappenings
+    let happenings = getDoneHappeningsCheckedHappening()
+    let doneHappenings = model.data.doneHappenings
+    if (happenings.length === 0){
+        happenings = doneHappenings
+    }
     for (let i = 0; i < happenings.length; i++) {
         let drawTime = model.data.doneHappenings
         const dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];

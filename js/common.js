@@ -1,9 +1,9 @@
 function createMenuHtml() {
     return /*html*/`
         <div class="topMenu">
-        <button class="btn--top" onclick="model.app.page='home'; updateView()">Hjemmeside</button>
-        <button class="btn--top" onclick="model.app.page='happening'; updateView()">Trekningsside</button>
-        <button class="btn--top" onclick="model.app.page='resetHappenings'; updateView()">Tilbakestill trekninger</button>
+        <button class="" onclick="model.app.page='home'; updateView()">Hjemmeside</button>
+        <button class="" onclick="model.app.page='happening'; updateView()">Trekningsside</button>
+        <button class="" onclick="model.app.page='resetHappenings'; updateView()">Tilbakestill alle trekninger</button>
         </div>
 
     `;
@@ -25,6 +25,17 @@ function getAllUserIds() {
     }
     return userIds;
 }
+
+function getIndexOfUserPoints(happeningId) {
+    let userPoints = model.data.userPoints
+    let indexes = [];
+    for (let i = 0; i < userPoints.length; i++) {
+        if(userPoints[i].happeningId === happeningId){
+        indexes.push(i);
+        }
+    }
+    return indexes;
+  }
 
 function getMaxHappeningId() {
     let id = 0;
@@ -105,6 +116,15 @@ function getUserObjPoints(userId, happeningId) {
         }
     }
 }
+
+// function getUserObjPoints(happeningId) {
+//     let users = model.data.userPoints;
+//     for (user of users) {
+//         if (user.happeningId === happeningId) {
+//             return user;
+//         }
+//     }
+// }
 
 function getUserByPoint(points, happeningId) {
     let users = model.data.userPoints;
@@ -210,6 +230,14 @@ function getUsersWithLowestPoint() {
 
 function getAllHappenings() {
     const happenings = model.data.happenings;
+    for (let i = 0; i < happenings.length; i++) {
+        const happening = happenings[i];
+    }
+    return happenings;
+}
+
+function getAllDoneHappenings() {
+    const happenings = model.data.doneHappenings;
     for (let i = 0; i < happenings.length; i++) {
         const happening = happenings[i];
     }

@@ -1,4 +1,5 @@
 function updateViewDeleteHappening(){
+    let id = model.inputs.deleteHappening.id
     document.getElementById('app').innerHTML = /*html*/`
         ${createMenuHtml()}  
         <div class="deleteAndEdit">
@@ -9,7 +10,7 @@ function updateViewDeleteHappening(){
             oninput="model.inputs.deleteHappening.areYouSure = this.checked"
             ${model.inputs.deleteHappening.areYouSure ? 'checked' : ''}
             /> Er du sikker på at du vil slette?<br><br />
-        <button onclick="deleteHappening()"> Slett! </button>
+        <button onclick="deleteHappening(${id})"> Slett! </button>
         </div>
        `;
 }

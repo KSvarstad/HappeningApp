@@ -6,10 +6,20 @@
     -moz-user-select: none; 
     -ms-user-select: none; 
     user-select: none; 
+    
+}
+
+::-webkit-scrollbar {
+  width: 0; 
+  background: transparent; 
 }
 
 body{
     padding: 20px;
+}
+
+ul {
+    list-style: none;
 }
 
 .container{
@@ -17,49 +27,49 @@ body{
     margin-top: -20px;
 }
 
-.box1{
+.boxOne{
     margin: 20px;
+    height: 750px;
+    overflow-y: scroll;
 }
 
-.box2{
+.boxTwo{
     margin: 20px;
+    height: 750px;
+    overflow-y: scroll;
 }
 
 .topMenu{
     margin-top: -15px;
 }
 
-.button-74 {
-  background-color: #fbeee0;
-  border: 2px solid #422800;
-  border-radius: 30px;
-  box-shadow: #422800 4px 4px 0 0;
-  color: #422800;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 600;
-  font-size: 18px;
-  padding: 0 18px;
-  line-height: 30px;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-74:hover {
-  background-color: #fff;
-}
-
-.button-74:active {
-  box-shadow: #422800 2px 2px 0 0;
-  transform: translate(2px, 2px);
-}
-
-@media (min-width: 768px) {
-  .button-74 {
-    min-width: 120px;
-    padding: 0 25px;
+.btn--top {
+    text-transform: uppercase;
+    background-color: #4300c0;
+    color: #fff ;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    margin: 15px 0px 15px 15px;
+    cursor: pointer;
   }
-}
+  
+  .btn--top:hover,
+  .btn--top:active {
+    background-color: #4800ce;
+  }
+  /* input[type=radio] {
+    border: 1px solid rgb(0, 0, 0);
+    padding: 0.5em;
+    -webkit-appearance: none;
+  }
+  
+  input[type=radio]:checked {
+    background-color: 'black';
+    background-size: 0.5em;
+  }
+  
+  input[type=radio]:focus {
+    outline-color: transparent;
+  } */

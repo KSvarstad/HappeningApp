@@ -1,9 +1,9 @@
 function createMenuHtml() {
     return /*html*/`
         <div class="topMenu">
-        <button class="" onclick="model.app.page='home'; updateView()">Hjemmeside</button>
-        <button class="" onclick="model.app.page='happening'; updateView()">Trekningsside</button>
-        <button class="" onclick="model.app.page='resetHappenings'; updateView()">Tilbakestill trekninger</button>
+        <button class="btn--top" onclick="model.app.page='home'; updateView()">Hjemmeside</button>
+        <button class="btn--top" onclick="model.app.page='happening'; updateView()">Trekningsside</button>
+        <button class="btn--top" onclick="model.app.page='resetHappenings'; updateView()">Tilbakestill trekninger</button>
         </div>
 
     `;
@@ -34,6 +34,14 @@ function getMaxHappeningId() {
     return id;
 }
 
+function getMaxDoneHappeningId() {
+    let id = 0;
+    for (let happening of model.data.doneHappenings) {
+        if (happening.id > id) id = happening.id;
+    }
+    return id;
+}
+
 function getHappeningById(id) {
     for (let happening of model.data.happenings) {
         if (happening.id === id) return happening;
@@ -49,6 +57,15 @@ function getHappeningIndexById(id) {
     }
     return null;
 }
+
+function getDoneHappeningIndexById(id) {
+    for (let i = 0; i < model.data.doneHappenings.length; i++) {
+        let happening = model.data.doneHappenings[i];
+        if (happening.id === id) return i;
+    }
+    return null;
+}
+
 
 function getUserById(id) {
     for (let user of model.data.users) {
@@ -76,6 +93,15 @@ function getUserPoints(userId, happeningId) {
     for (point of points) {
         if (point.userId === userId && point.happeningId === happeningId) {
             return point.points;
+        }
+    }
+}
+
+function getUserObjPoints(userId, happeningId) {
+    let users = model.data.userPoints;
+    for (user of users) {
+        if (user.userId === userId && user.happeningId === happeningId) {
+            return user;
         }
     }
 }
@@ -190,7 +216,7 @@ function getAllHappenings() {
     return happenings;
 }
 
-function createUserPointsObj(){
+function createUserPointsObj() {
     let userPoints = model.data.userPoints
     let happeningIds = getAllHappeningIds()
     let userObject = {}
@@ -199,3 +225,34 @@ function createUserPointsObj(){
     userObject.points = ''
     userPoints.push(userObject)
 }
+
+function getDateStringForDisplay(dato) {
+    return dato.toLocaleString('no-NO').replace(',', '');
+}
+
+function getDateStringForStorage(dato) {
+    return dato.toISOString().substr(0).replace('T', ' ');
+}
+
+
+function getNowForStorage() {
+    return getDateStringForStorage(new Date());
+}
+
+function getLowestPointsFromEachHappening() {
+    let pointsInHappening = []
+    let happenings = model.data.userPoints
+    let happeningIds = getAllHappenings()
+    for (x in happeningIds) {
+        let pointsInEachHappening = []
+        for (y in happenings) {
+            if (happenings[y].happeningId === happeningIds[x].id) {
+                pointsInEachHappening.push(happenings[y].points)
+            }
+        }
+        pointsInHappening.push(pointsInEachHappening)
+    }
+    let lowestPoints = pointsInHappening.map( arr => Math.min(...arr))
+    return lowestPoints
+}
+

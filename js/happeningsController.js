@@ -16,6 +16,12 @@ function togglePersonSelected(id) {
     updateView();
 }
 
+function toggleDetailsSelected(id) {
+    const doneHappening = getDoneHappeningById(id);
+    doneHappening.detailsShown = !doneHappening.detailsShown;
+    updateView();
+}
+
 function toggleHappeningSelected(id) {
     const happening = getHappeningById(id)
     happening.isSelected = !happening.isSelected;
@@ -38,7 +44,7 @@ function getCheckedUsersIds() {
     for (user of users) {
         userIds.push(user.id)
     }
-        return userIds;
+    return userIds;
 }
 
 function getCheckedUsersNames() {
@@ -47,7 +53,7 @@ function getCheckedUsersNames() {
     for (user of users) {
         userNames.push(user.name)
     }
-        return userNames;
+    return userNames;
 }
 
 function getCheckedHappeningName() {
@@ -66,7 +72,7 @@ function getCheckedHappeningId() {
     }
 }
 
-function getAllHappeningIds(){
+function getAllHappeningIds() {
     let happenings = []
     let allHappenings = model.data.happenings
     for (let i = 0; i < allHappenings.length; i++) {
@@ -75,28 +81,8 @@ function getAllHappeningIds(){
     return happenings
 }
 
-function resetHappenings(){
+function resetHappenings() {
     model.data.doneHappenings = []
-    updateView()
-}
-
-function deleteDoneHappening(id){
-    const doneHappenings = model.data.doneHappenings
-    let userId = null
-    let happeningId = null
-    for(happening of doneHappenings){
-        if(happening.id === id)
-        userId = happening.userId
-    }
-    for(happening of doneHappenings){
-        if(happening.id === id)
-        happeningId = happening.happeningId
-    }
-    let userDrawn = getUserObjPoints(userId, happeningId)
-    userDrawn.points = userDrawn.points - 2
-    const index = getDoneHappeningIndexById(id);
-    model.data.doneHappenings.splice(index, 1);
-    model.app.page='happening';
     updateView()
 }
 
@@ -108,39 +94,84 @@ function getCheckedHappenings() {
     return checkedhappenings;
 }
 
-function drawUser(){
+function drawUser() {
+    let drawCount = model.inputs.drawCount
     let checkedHappenings = getCheckedHappenings()
     let checkedHappeningName = getCheckedHappeningName()
     let checkedHappeningIds = getCheckedUsers()
-    if(checkedHappeningName === undefined){
+    let doDate = model.inputs.drawDate
+    let date = new Date(doDate)
+    if (doDate === null ){
+        date = null
+    }
+    // date.setDate(date.getDate()+7)
+    if (checkedHappeningName === undefined) {
         alert('Velg arrangement!')
         return
     }
-    if(checkedHappenings.length > 1){
+    if (checkedHappenings.length > 1) {
         alert('Du har huket av flere arrangementer!')
         return
     }
-    if(checkedHappeningIds.length === 0){
+    if (checkedHappeningIds.length === 0) {
         alert('Velg personer å trekke mellom!')
         return
     }
-    let winners = model.data.doneHappenings
-    let winner = {}
-    winner.participants = getCheckedUsersNamesFromLowestPoint()
-    let listOfUsers = getUsersWithLowestPoint()
-    let drawnPerson = listOfUsers[Math.floor(Math.random()*listOfUsers.length)];
-    drawnPerson.points += 2
-    let winnerId = drawnPerson.userId
-    let winnerUser = getUserById(winnerId)
-    winner.id = getMaxDoneHappeningId() + 1
-    winner.userId = winnerId
-    winner.happeningId = getCheckedHappeningId()
-    winner.name = getCheckedHappeningName()
-    winner.userDrawn = winnerUser.name
-    winner.time = getNowForStorage()
-    winners.unshift(winner)
-    model.app.page = 'happening'
-    updateViewHappenings()
-    return winner
+    for (let i = 0; i < drawCount; i++) {
+        let winners = model.data.doneHappenings
+        let winner = {}
+        let listOfUsers = getUsersWithLowestPoint()
+        let drawnPerson = listOfUsers[Math.floor(Math.random() * listOfUsers.length)];
+        drawnPerson.points += 2
+        let winnerId = drawnPerson.userId
+        let winnerUser = getUserById(winnerId)
+        winner.participants = getCheckedUsersNamesFromLowestPoint()
+        winner.comments = []
+        winner.id = getMaxDoneHappeningId() + 1
+        winner.userId = winnerId
+        winner.doDate = date
+        winner.happeningId = getCheckedHappeningId()
+        winner.name = getCheckedHappeningName()
+        winner.userDrawn = winnerUser.name
+        winner.time = getNowForStorage()
+        winner.detailsShown = false,
+            winners.unshift(winner)
+        model.app.page = 'happening'
+        updateView()
+    }
+    model.inputs.drawDate = null
+}
+
+function addComment(id) {
+    let happening = getDoneHappeningById(id)
+    if (model.inputs.comment === '') {
+        return
+    }
+    else {
+        let comment = {}
+        comment.commentTime = getNowForStorage()
+        comment.commentId = getMaxCommentIdDoneHappening(id) + 1
+        comment.comment = model.inputs.comment
+        happening.comments.push(comment)
+        model.inputs.comment = ''
+        updateView()
+    }
+}
+
+function goToDeleteCommentPage(happeningId) {
+    model.app.page = 'deleteComment';
+    model.inputs.deleteComment.doneHappeningId = happeningId;
+    updateView()
+}
+
+
+function check() {
+    document.getElementById("cb1").checked = true;
+}
+
+function goToDetailsPage(happeningId) {
+    model.app.page = 'details';
+    document.getElementById("cb1").checked = true;
+    updateDetailsView()
 }
 

@@ -1,0 +1,262 @@
+@media only screen and (max-width: 600px) {
+    
+  
+*{
+    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+    -khtml-user-select: none;  
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+    box-sizing: border-box;
+        
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.4em;
+        border-top-left-radius: 50% ;
+        border-top-right-radius: 50%;
+      }
+       
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-top-left-radius: 5px ;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+       
+    ::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+
+      ul {
+        list-style: none;}
+
+
+body{
+    padding: 0px;
+    margin: 0px;
+}
+.container{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 2fr 1fr;
+    grid-template-areas: 
+                        'topMenu'
+                        'happenings'
+                        'users'
+                        'doneHappenings'
+    ;
+}
+
+.topMenu{
+    grid-area: topMenu;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.happeningsColumn{
+    /* background-color: cadetblue; */
+    grid-area: happenings;
+    max-height: 100vh;
+    overflow: auto;
+    margin-left: 1rem;
+}
+
+.deleteAndEdit{
+    margin-left: 1rem;
+}
+
+.doneHappeningsColumn{
+    /* background-color: cornflowerblue; */
+    grid-area: doneHappenings;
+    max-height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.happeningList{
+    margin-top: -10px;
+}
+
+.userColumn{
+    /* background-color: darkslategray; */
+    grid-area: users;
+    max-height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.containerAdmin{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 400px;
+    grid-template-areas: 
+                        'topMenu'
+                        'happenings'
+                        'users'
+    ;
+    /* background-color: aqua; */
+}
+
+
+.happeningsAdminColumn{
+    grid-area: happenings;
+    /* background-color: cadetblue; */
+    max-height: 90vh;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    /* background-color: cornflowerblue; */
+    /* opacity: 75%; */
+}
+
+
+.usersAdminColumn{
+    /* background-color: cadetblue; */
+    /* background-color: cadetblue; */
+    grid-area: users;
+    max-height: 90vh;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    overflow: scroll;
+    overflow-x: hidden;
+    /* opacity: 75%; */
+}
+
+.addArrangementBox, .addPersonBox{
+    /* background-color: cornflowerblue; */
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+}
+
+.adminUsers{
+    max-height: 73vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.adminDoneHappenings{
+    max-height: 90vh;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.btn--top{
+    margin-right: 0.3rem;
+}
+
+.addBtn{
+    width: 1.75rem;
+}
+
+.drawButton, .btn--top, .addBtn {
+    background-color: #ffffff;
+    border-style: none;
+    border: 1px solid slategray;
+    border-radius: 2px 2px 2px 2px;
+    height: 1.65rem;
+}
+
+.btn--delete{
+    font-weight: 700;
+    display: flex;
+    padding:8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn--delete, .btn--edit {
+    float: right;
+    transform: translateX(-20px);
+    margin-right: 2px;
+    background-color: #ffffff;
+    border-style: none;
+    border: 1px solid slategray;
+    border-radius: 2px 2px 2px 2px;
+    height: 1.65rem;
+}
+
+.addBtn:hover{
+    transition: 0.5s;
+    background-color: #0075ff;
+}
+
+.addBtn:active{
+    transition: 0.5s;
+    background-color: #0461cc;
+}
+
+.btn--edit:hover{
+    transition: 0.5s;
+    background-color: #0075ff;
+}
+
+.btn--edit:active{
+    transition: 0.5s;
+    background-color: #0461cc;
+}
+.btn--delete:hover{
+    transition: 0.5s;
+    background-color: #0075ff;
+}
+
+.btn--delete:active{
+    transition: 0.5s;
+    background-color: #0461cc;
+}
+.drawButton:hover{
+    transition: 0.5s;
+    background-color: #0075ff;
+}
+
+.drawButton:active{
+    transition: 0.5s;
+    background-color: #0461cc;
+}
+
+.btn--top:hover{
+    transition: 0.5s;
+    background-color: #0075ff;
+}
+
+.btn--top:active{
+    transition: 0.5s;
+    background-color: #0461cc;
+}
+
+.deleteComments{
+    margin-left: 1rem;
+}
+
+
+.participantList{
+    max-width: 50vw;
+}
+
+.loginInput{
+    margin-left: 1rem;
+}
+
+}

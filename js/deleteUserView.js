@@ -1,6 +1,7 @@
 function updateViewDeleteUser(){
+    let id = model.inputs.deleteUser.id;
     document.getElementById('app').innerHTML = /*html*/`
-        ${createMenuHtml()}  
+        ${createMenuHtmlAdmin()}  
         <div class="deleteAndEdit">
         <h3> Slett </h3>
         ${createDeleteUserHtml()}
@@ -9,7 +10,7 @@ function updateViewDeleteUser(){
             oninput="model.inputs.deleteUser.areYouSure = this.checked"
             ${model.inputs.deleteUser.areYouSure ? 'checked' : ''}
             /> Er du sikker på at du vil slette?<br><br/>
-        <button onclick="deleteUser()"> Slett! </button>
+        <button class="btn--top" onclick="deleteUser(${id})"> Slett! </button>
         </div>
        `;
 }

@@ -123,7 +123,7 @@ function adminGetDoneHappening() {
         oninput="model.inputs.comment=this.value"/> 
         <button class="btn--top" onclick=addCommentAdmin(${doneHappening.id})>Legg til kommentar</button>
         <button class="btn--top" id="slette" onclick="goToDeleteCommentPageAdmin(${doneHappening.id})">Slett en kommentar</button>
-        <button class="btn--top"onclick="deleteDoneHappening(${doneHappening.id})">Slett Happening</button>
+        <button class="btn--top"onclick="deleteDoneHappening(${doneHappening.id})">Slett Trekning</button>
         </form>
         <hr>
         </div> 

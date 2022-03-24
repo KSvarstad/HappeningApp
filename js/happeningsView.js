@@ -218,6 +218,10 @@ function happenMenuHtml() {
           type="date" value="${model.inputs.drawDate}" 
           oninput="model.inputs.drawDate = (this.value)"
           min="2022-03-01"/>
+          Så fort som mulig -
+          <input type="checkbox"/>
+          Innen en uke -
+          <input type="checkbox"/>
           <button class="drawButton" onclick="drawUser(); updateView()">Trekk</button>
           </div>
       `;

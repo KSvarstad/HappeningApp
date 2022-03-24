@@ -105,7 +105,6 @@ body{
     /* background-color: aqua; */
 }
 
-
 .happeningsAdminColumn{
     grid-area: happenings;
     /* background-color: cadetblue; */
@@ -113,6 +112,8 @@ body{
     margin-left: 1rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word
     /* background-color: cornflowerblue; */
     /* opacity: 75%; */
 }
@@ -145,7 +146,7 @@ body{
 }
 
 .adminDoneHappenings{
-    max-height: 90vh;
+    max-height: 88vh;
     margin-left: 1rem;
     margin-right: 1rem;
     overflow: auto;
@@ -246,4 +247,9 @@ body{
 
 .loginInput{
     margin-left: 1rem;
+}
+
+.editPoints{
+    float:right;
+    transform: translateX(-30rem);
 }

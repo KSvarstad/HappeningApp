@@ -85,7 +85,7 @@ function getusersHome() {
 function getAllHappeningsHome() {
   let html = '';
   let happenings = model.data.happenings;
-  happenings.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+  // happenings.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
   for (let i = 0; i < happenings.length; i++) {
     const happening = happenings[i];
     html += /*html*/ `

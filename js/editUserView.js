@@ -28,27 +28,25 @@ function getAllHappeningsEditUser(){
     let html = '';
     const happenings = model.data.happenings;
     const userIds = model.data.userPoints;
-    const id = model.inputs.editUser.userId;
+    const userId = model.inputs.editUser.userId;
     
     for (let i = 0; i < happenings.length; ) {
         for(let j = 0; j < userIds.length; j++) {
-            if (userIds[j].userId === id) {
-                
+            if ( userIds[j].userId === userId && userIds[j].happeningId === happenings[i].id) {    
             const happening = happenings[i];
             const userId = userIds[j];
         html += /*html*/`
-            <ul>
-            <li>
                 ${happening.name}
-                    <input 
-                    type="text"
+                    <input
+                    class="editPoints"
+                    type="number"
+                    style="width: 50px;"
                     title="Endre poeng til bruker"
                     value="${userId.points}"
                     oninput="model.inputs.editUser.points=parseInt(this.value)"
                     onchange="editPoints(${userId.userId}, ${happening.id})"
                     >
-            </li>
-            </ul> 
+                    <br /><br />
         `
         i++}
     }   

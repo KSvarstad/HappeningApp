@@ -45,16 +45,23 @@ body{
 .container{
     display: grid;
     height: 100vh;
-    grid-template-columns: 1.3fr 2fr 3fr;
+    grid-template-rows: 50px auto;
+    grid-template-columns: 1.2fr 1.3fr 1.5fr 3fr;
     grid-template-areas: 
-                        'topMenu topMenu topMenu'
-                        'happenings users doneHappenings'
+                        'topMenu topMenu topMenu topMenu'
+                        'drawColumn happenings users doneHappenings'
     ;
 }
 
 .topMenu{
     grid-area: topMenu;
     margin: 1rem;
+}
+
+.drawColumn{
+    grid-area: drawColumn;
+    margin-left: 1rem;
+    /* background-color: cadetblue; */
 }
 
 .happeningsColumn{
@@ -80,8 +87,9 @@ body{
     margin-right: 0.5rem;
 }
 
-.happeningList{
-    margin-top: 3.53rem;
+img {
+    height: 50px;
+    position: relative;
 }
 
 .userColumn{
@@ -97,6 +105,7 @@ body{
 .containerAdmin{
     display: grid;
     height: 100vh;
+    grid-template-rows: 50px auto;
     grid-template-columns: 400px 400px;
     grid-template-areas: 
                         'topMenu topMenu'
@@ -251,5 +260,5 @@ body{
 
 .editPoints{
     float:right;
-    transform: translateX(-30rem);
+    transform: translateX(-58rem);
 }

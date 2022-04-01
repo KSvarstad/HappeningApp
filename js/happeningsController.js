@@ -18,13 +18,45 @@ function togglePersonSelected(id) {
 
 function toggleDetailsSelected(id) {
     const doneHappening = getDoneHappeningById(id);
+    const allHappenings = model.data.doneHappenings
     doneHappening.detailsShown = !doneHappening.detailsShown;
-    updateView();
+    allHappenings.filter(obj => {
+        if (obj.id !== id)
+            obj.detailsShown = false
+    })
+    updateView()
 }
 
 function toggleHappeningSelected(id) {
     const happening = getHappeningById(id)
     happening.isSelected = !happening.isSelected;
+    updateView();
+}
+
+function toggleDoAsapSelected() {
+    const input = model.inputs
+    input.doAsap = !input.doAsap;
+    model.inputs.drawDate = null
+    model.inputs.doWithinWeek = false
+    model.inputs.doWithinTwoDays = false
+    updateView();
+}
+
+function toggleDoWithinWeekSelected() {
+    const input = model.inputs
+    input.doWithinWeek = !input.doWithinWeek
+    model.inputs.drawDate = null
+    model.inputs.doAsap = false
+    model.inputs.doWithinTwoDays = false
+    updateView();
+}
+
+function toggleDoWithinTwoDaysSelected() {
+    const input = model.inputs
+    input.doWithinTwoDays = !input.doWithinTwoDays
+    model.inputs.drawDate = null
+    model.inputs.doAsap = false
+    model.inputs.doWithinWeek = false
     updateView();
 }
 
@@ -101,10 +133,18 @@ function drawUser() {
     let checkedHappeningIds = getCheckedUsers()
     let doDate = model.inputs.drawDate
     let date = new Date(doDate)
-    if (doDate === null ){
+    if (doDate === null || doDate === undefined || doDate === '') {
         date = null
     }
-    // date.setDate(date.getDate()+7)
+    if (model.inputs.doAsap === true) {
+        date = 'Så fort som mulig'
+    }
+    if (model.inputs.doWithinWeek === true) {
+        date = 'Innen en uke'
+    }
+    if (model.inputs.doWithinTwoDays === true) {
+        date = 'Innen to dager'
+    }
     if (checkedHappeningName === undefined) {
         alert('Velg arrangement!')
         return
@@ -140,22 +180,22 @@ function drawUser() {
         updateView()
     }
     model.inputs.drawDate = null
+    model.inputs.doAsap = false
+    model.inputs.doWithinDate = null
+    model.inputs.doWithinTwoDays = false
+    model.inputs.doWithinWeek = false
 }
 
 function addComment(id) {
     let happening = getDoneHappeningById(id)
-    if (model.inputs.comment === '') {
-        return
-    }
-    else {
-        let comment = {}
-        comment.commentTime = getNowForStorage()
-        comment.commentId = getMaxCommentIdDoneHappening(id) + 1
-        comment.comment = model.inputs.comment
-        happening.comments.push(comment)
-        model.inputs.comment = ''
-        updateView()
-    }
+    let comment = {}
+    if(model.inputs.commentHappening.comment === '') return
+    comment.commentTime = getNowForStorage()
+    comment.commentId = getMaxCommentIdDoneHappening(id) + 1
+    comment.comment = model.inputs.commentHappening.comment
+    happening.comments.push(comment)
+    model.inputs.commentHappening.comment = ''
+    updateView()
 }
 
 function goToDeleteCommentPage(happeningId) {

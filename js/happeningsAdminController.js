@@ -45,18 +45,16 @@ function adminGetCheckedHappenings() {
 
 function addCommentAdmin(id){
     let happening = getDoneHappeningById(id)
-    if (model.inputs.comment === '') {
-        return
-    }
-    else {
-        let comment = {}
-        comment.commentTime = getNowForStorage()
-        comment.commentId = getMaxCommentIdDoneHappening(id) + 1
-        comment.comment = model.inputs.comment
-        happening.comments.push(comment)
-        model.inputs.comment = ''
+    let happeningId = model.inputs.commentHappening.doneHappeningId
+    if (id === happeningId) {
+            let comment = {}
+            comment.commentTime = getNowForStorage()
+            comment.commentId = getMaxCommentIdDoneHappening(id) + 1
+            comment.comment = model.inputs.commentHappening.comment
+            happening.comments.push(comment)
+        }
         updateAdminView()
-    }
+    
 }
 
 function goToDeleteCommentPageAdmin(happeningId) {

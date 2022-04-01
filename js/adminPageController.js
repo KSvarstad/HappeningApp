@@ -6,10 +6,10 @@ function createNewUser() {
     user.isSelected = false;
     if (user.name !== '') {
         model.data.users.push(user);
+        model.inputs.newUser.name = '';
         newHappeningPointsObj()
         updateAdminView()
     }
-    model.inputs.newUser.name = '';
     selectAllOrNone(this.unchecked)
 }
 
@@ -22,10 +22,10 @@ function createNewHappening() {
     happening.isSelected = false
     if (happening.name !== '') {
         model.data.happenings.push(happening);
+        model.inputs.newHappening.name = '';
         newUserPointsObj()
         updateAdminView()
     }
-    model.inputs.newHappening.name = '';
 }
 
 function newHappeningPointsObj() {

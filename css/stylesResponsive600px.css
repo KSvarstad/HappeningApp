@@ -1,4 +1,4 @@
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 750px) {
     
   
 *{
@@ -48,24 +48,26 @@ body{
 .container{
     display: grid;
     height: 100vh;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1.5fr 4fr 3fr;
+    grid-template-rows: 50px 1fr 1fr;
+    grid-template-columns: auto auto;
     grid-template-areas: 
-                        'topMenu'
-                        'happenings'
-                        'users'
-                        'doneHappenings'
+                        'topMenu topMenu'
+                        'drawColumn happenings' 
+                        'doneHappenings users'
     ;
 }
 
 .topMenu{
     grid-area: topMenu;
     margin: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
 }
+
+.drawColumn{
+    grid-area: drawColumn;
+    margin-left: 1rem;
+    /* background-color: cadetblue; */
+}
+
 
 .happeningsColumn{
     /* background-color: cadetblue; */

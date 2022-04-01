@@ -55,7 +55,10 @@ const model = {
             areYouSure: false,
         },
 
-        comment: '',
+        commentHappening: {
+            happeningId: null,
+            comment: '',
+        },
 
         deleteComment: {
             doneHappeningId: null,
@@ -64,7 +67,15 @@ const model = {
 
         drawCount: 1,
         
-        drawDate: null,
+        doDate: null,
+
+        doWithinDate: null,
+
+        doWithinWeek: false,
+
+        doAsap: false,
+        
+        doWithinTwoDays: false,
     },
 
     data: {
@@ -197,6 +208,21 @@ const model = {
         ],
         
         doneHappenings: [
+
+            {
+                comments: [],
+                detailsShown: false,
+                doDate: null, 
+                happeningId: 2,
+                id: 1,
+                name: "Rense kaffemaskin",
+                participants: ['Anders H', 'Bjørn', 'Edgar', 'Emil', 'Espen', 'Fredrik', 
+                'Helene', 'Jeanette', 'Jørn', 'Kay', 'Kjetil', 'Matthias', 'Milad', 'Nicolai', 
+                'Rune', 'Sindre', 'Steinar J', 'Steinar S', 'Vegard'],
+                time: "2022-03-25 10:24:24.336Z",
+                userDrawn: "Charlotte",
+                userId: 11,
+            }
 
         ],
     },

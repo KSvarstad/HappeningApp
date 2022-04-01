@@ -96,25 +96,72 @@ function adminGetDoneHappening() {
         <h4>Trekning - <span style="color: #FF5733;">${doneHappening.name}</span>
         </h4> 
         <h4>Trukket person - <span style="color: #6AB334;">${doneHappening.userDrawn}</span></h3>
-        <h4 id=>Utføres - 
-        <span style="color: #0075ff">${doDateName} ${doDateText.substr(0,10)}</span></h4>
-        <div>
-        <h4>Trukket: ${dayName} ${dateText}</h4>
-        <h3 class="participantList">Trukket blant disse personene - <br> 
-        <span style="color: #0075ff;">${createTextList(doneHappening.participants)}</span></h3>
-        <h4>Kommentarer - </h3>`
-        for (let j = 0; j < comments.length; j++) {
-          let comment = comments[j]
-          const commentTime = new Date(comments[j].commentTime);
-          const commentTimeText = getDateStringForDisplay(commentTime);
-          const commentDayName = dayNames[time.getDay()];
-          html += /*html*/`
-                <span style="font-weight: 500;">- ${comment.comment} 
-                <span style="font-weight: 400; font-size: 10px;">(${commentDayName} ${commentTimeText})</span></span><br />
-              `;
-        }
+        `;
+    if (date === 'Så fort som mulig') {
+      html += /*html*/ `
+      <h4 id=>Utføres - 
+      <span style="color: #0075FF">Så fort som mulig</span></h4>
+      `;
+    }
 
-    html += /*html*/ `
+    if (date === 'Innen en uke') {
+      time.setDate(time.getDate() + 7)
+      const doWithinText = getDateStringForDisplay(time).substr(0, 9);
+      const doWithinName = dayNames[time.getDay()];
+      html += /*html*/ `
+      <h4 id=>
+      Utføres innen - 
+      <span style="color: #0075FF">${doWithinName} ${doWithinText}
+      </span>
+      </h4>
+      `;
+    }
+
+    if (date === 'Innen to dager') {
+      time.setDate(time.getDate() + 2)
+      const doWithinText = getDateStringForDisplay(time).substr(0, 9);
+      const doWithinName = dayNames[time.getDay()];
+      html += /*html*/ `
+      <h4 id=>
+      Utføres innen - 
+      <span style="color: #0075FF">${doWithinName} ${doWithinText}
+      </span>
+      </h4>
+      `;
+    }
+
+    if (date !== null && date !== 'Så fort som mulig' && date !== 'Innen en uke' && date !== 'Innen to dager') {
+      const doDate = new Date(date)
+      let doDateText = getDateStringForDisplay(doDate).substr(0, 9)
+      let doDateName = dayNames[doDate.getDay()]
+      html += /*html*/ `
+        <h4 id=>Utføres - 
+        <span style="color: #0075ff">${doDateName} ${doDateText}</span></h4>
+        `;
+    }
+
+      html += /*html*/`
+      <div>
+      <h4>Kommentarer - </h4>`
+      for (let j = 0; j < comments.length; j++) {
+        let comment = comments[j]
+        if (comment.comment === 'Utført' || comment.comment === 'utført') {
+          html += /*html*/`
+          <img src="img/greenCheck2.png" alt=""/> <br />
+          `;
+        }
+        const commentTime = new Date(comments[j].commentTime);
+        const commentTimeText = getDateStringForDisplay(commentTime);
+        const commentDayName = dayNames[commentTime.getDay()];
+        html += /*html*/`
+        <span style="font-weight: 500;">- ${comment.comment} 
+        <span style="font-weight: 400; font-size: 10px;">(${commentDayName} ${commentTimeText})</span></span><br />
+        `;
+
+      }
+
+
+      html += /*html*/ `
         <br />
         <form>
         <input oninvalid="this.setCustomValidity('Feltet kan ikke være tomt')" 
@@ -130,12 +177,10 @@ function adminGetDoneHappening() {
         
         `;
 
+    }
+
+    return html;
   }
-  html += /*html*/ `
-  </div>
-  `;
-  return html;
-}
 
 function adminGetDoneHappeningsCheckedHappening() {
   let checkedDoneHappenings = [];

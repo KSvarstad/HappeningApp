@@ -2,7 +2,35 @@ function updateViewHappenings() {
   document.getElementById('app').innerHTML = /*html*/ `
   <div class="container">
     ${happenMenuHtml()}
-      
+      <div class="drawColumn">
+      <h2>Trekk!</h2>
+      Antall trekninger -
+      <input 
+      style="margin-right: 0.5rem; width: 45px;"
+      type="number"
+      size="1" 
+      value="${model.inputs.drawCount}" 
+      onchange="model.inputs.drawCount=parseInt(this.value)"
+      /> <br /> <br />
+      Skal utføres - <br /> <br />
+      <input
+      style="margin-right: 0.5rem"
+      type="date" value="${model.inputs.drawDate}" 
+      oninput="model.inputs.drawDate = (this.value)"
+      min="2022-03-01"/> <br /><br />
+      <span style="color: #FF5733">Så fort som mulig -</span>
+      <input type="checkbox" onclick="toggleDoAsapSelected()"
+      ${getChecked(model.inputs.doAsap)}/> <br /><br />
+      <span style="color: #0075FF">Innen en uke</span> -
+      <input type="checkbox" onclick="toggleDoWithinWeekSelected()"
+      ${getChecked(model.inputs.doWithinWeek)}/> <br /> <br />
+      <span style="color: green">Innen to dager</span> -
+      <input type="checkbox" onclick="toggleDoWithinTwoDaysSelected()"
+      ${getChecked(model.inputs.doWithinTwoDays)}/> <br /> <br />
+      <button class="drawButton" onclick="drawUser(); updateView()">Trekk</button>
+
+
+      </div>
       <div class="happeningsColumn">
       <h2 class="headerHappenings">Velg <span style="color: #FF5733">en</span> trekning! 
       </h2>
@@ -30,7 +58,7 @@ function updateViewHappenings() {
             onclick="selectAllOrNone(this.checked)"
             ${getChecked(
     model.data.selectAll
-  )}/> <span style="color: #0075ff; font-weight: 600;">Velg alle</span><br/>
+  )}/> <span style="color: #0075FF; font-weight: 600;">Velg alle</span><br/>
             ${getUsers()}<br/>
             </div>
       </div>
@@ -108,52 +136,92 @@ function getDoneHappening() {
       'Fredag',
       'Lørdag',
     ];
+    // doDate.setDate(doDate.getDate()+7);
     const time = new Date(drawTime[i].time);
     const dateText = getDateStringForDisplay(time);
     const dayName = dayNames[time.getDay()];
     const doneHappening = happenings[i];
     const date = doneHappening.doDate
-    const doDate = new Date(date)
-    // doDate.setDate(doDate.getDate()+7);
-    let doDateText = getDateStringForDisplay(doDate)
-    let doDateName = dayNames[doDate.getDay()]
     html += /*html*/ `
-        <h3>Trekning - <span style="color: #FF5733;">${doneHappening.name
-      }</span>
-        </h3> 
-       
-        <h4>Trukket person - <span style="color: #6AB334;">${doneHappening.userDrawn
-      }</span></h4>
+    <div class="doneHappeningBox">
+    <h3>Trekning - <span style="color: #FF5733;">${doneHappening.name
+    }</span>
+    </h3> 
+    
+    <h4>Trukket person - <span style="color: #6AB334;">${doneHappening.userDrawn
+    }</span></h4>
       `;
-      if (date !== null && date !== '') {
-        html += /*html*/ `
+    if (date === 'Så fort som mulig') {
+      html += /*html*/ `
+      <h4 id=>Utføres - 
+      <span style="color: #0075FF">Så fort som mulig</span></h4>
+      `;
+    }
+
+    if (date === 'Innen en uke') {
+      time.setDate(time.getDate() + 7)
+      const doWithinText = getDateStringForDisplay(time).substr(0,9);
+      const doWithinName = dayNames[time.getDay()];
+      html += /*html*/ `
+      <h4 id=>
+      Utføres innen - 
+      <span style="color: #0075FF">${doWithinName} ${doWithinText}
+      </span>
+      </h4>
+      `;
+    }
+    
+    if (date === 'Innen to dager') {
+      time.setDate(time.getDate() + 2)
+      const doWithinText = getDateStringForDisplay(time).substr(0,9);
+      const doWithinName = dayNames[time.getDay()];
+      html += /*html*/ `
+      <h4 id=>
+      Utføres innen - 
+      <span style="color: #0075FF">${doWithinName} ${doWithinText}
+      </span>
+      </h4>
+      `;
+    }
+
+    if (date !== null && date !== 'Så fort som mulig' && date !== 'Innen en uke' && date !== 'Innen to dager') {
+      const doDate = new Date(date)
+      let doDateText = getDateStringForDisplay(doDate).substr(0, 9)
+      let doDateName = dayNames[doDate.getDay()]
+      html += /*html*/ `
         <h4 id=>Utføres - 
-        <span style="color: #0075ff">${doDateName} ${doDateText.substr(0, 9)}</span></h4>
+        <span style="color: #0075ff">${doDateName} ${doDateText}</span></h4>
         `;
-        }
-        
-        if (doneHappening.detailsShown === true) {
+    }
+
+    if (doneHappening.detailsShown === true) {
+      html += /*html*/`
+      <div>
+      <h4>Kommentarer - </h4>`
+      for (let j = 0; j < comments.length; j++) {
+        let comment = comments[j]
+        if(comment.comment === 'Utført' || comment.comment === 'utført'){
           html += /*html*/`
-          <div>
-          <h4>Kommentarer - </h4>`
-          for (let j = 0; j < comments.length; j++) {
-            const commentTime = new Date(comments[j].commentTime);
-            const commentTimeText = getDateStringForDisplay(commentTime);
-            const commentDayName = dayNames[commentTime.getDay()];
-            let comment = comments[j]
-            html += /*html*/`
-            <span style="font-weight: 500;">- ${comment.comment} 
-            <span style="font-weight: 400; font-size: 10px;">(${commentDayName} ${commentTimeText})</span></span><br />
-            `;
-          }
-          
-          html += /*html*/ `
+          <img src="img/greenCheck2.png" alt=""/> <br />
+          `;
+        }
+        const commentTime = new Date(comments[j].commentTime);
+        const commentTimeText = getDateStringForDisplay(commentTime);
+        const commentDayName = dayNames[commentTime.getDay()];
+        html += /*html*/`
+        <span style="font-weight: 500;">- ${comment.comment} 
+        <span style="font-weight: 400; font-size: 10px;">(${commentDayName} ${commentTimeText})</span></span><br />
+        `;
+        
+      }
+
+      html += /*html*/ `
           <br/>
           <form>
           <input oninvalid="this.setCustomValidity('Feltet kan ikke være tomt')" 
           title="Skriv kommentar" 
           required type="text" 
-          oninput="model.inputs.comment=this.value"/> 
+          oninput="model.inputs.commentHappening.comment=this.value , model.inputs.commentHappening.happeningId=${doneHappening.id} "/> 
           
         <button class="btn--top" onclick=addComment(${doneHappening.id
         })>Legg til kommentar</button>
@@ -163,15 +231,13 @@ function getDoneHappening() {
         <h4>Trukket - ${dayName} ${dateText}</h4>
         </div> 
         `;
-      } 
-      // else { 
-      //   html += /*html*/`
-      //   `; }
-        html += /*html*/`<button class="btn--top"
+    }
+    html += /*html*/`<button class="btn--top"
         title="Detaljer" id="detailsSwich" 
         onclick="toggleDetailsSelected(${doneHappening.id})"
         ${getChecked(doneHappening.detailsShown)}>Detaljer</button>
         <hr>
+        </div>
         `;
   }
   return html;
@@ -204,28 +270,11 @@ function happenMenuHtml() {
   return /*html*/ `
           <div class="topMenu">
           <button class="btn--top" onclick="model.app.page='login'; updateView()">Admin</button>
-          Antall trekninger -
-          <input 
-          style="margin-right: 0.5rem; width: 45px;"
-          type="number"
-          size="1" 
-          value="${model.inputs.drawCount}" 
-          onchange="model.inputs.drawCount=parseInt(this.value)"
-          />
-          Skal utføres -
-          <input
-          style="margin-right: 0.5rem"
-          type="date" value="${model.inputs.drawDate}" 
-          oninput="model.inputs.drawDate = (this.value)"
-          min="2022-03-01"/>
-          Så fort som mulig -
-          <input type="checkbox"/>
-          Innen en uke -
-          <input type="checkbox"/>
-          <button class="drawButton" onclick="drawUser(); updateView()">Trekk</button>
           </div>
       `;
 }
+
+
 
 function resetHappenings() {
   model.data.doneHappenings = []
